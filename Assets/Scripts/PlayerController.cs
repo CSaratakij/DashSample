@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour
     MoveType moveType;
     CharacterController characterController;
 
+    void OnValidate()
+    {
+        ValidateInput();
+    }
+
     void Awake()
     {
         Initialize();
@@ -60,6 +65,15 @@ public class PlayerController : MonoBehaviour
     void LateUpdate()
     {
         RotateHandler();
+    }
+
+    void ValidateInput()
+    {
+        var shouldValidateDashDuration = (dashDuration <= 0.0f) || Mathf.Approximately(dashDuration, 0.0f);
+
+        if (shouldValidateDashDuration) {
+            dashDuration = 0.1f;
+        }
     }
 
     void Initialize()
